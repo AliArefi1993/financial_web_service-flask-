@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+// The new bank account service definition.
+service account_adder {
+  // Sends a new account
+  rpc add_account (AccountInfoRequest) returns (AddingAccountActionReply) {}
+}
+
+// The withdrawing service definition.
+service withdrawer {
+  // Sends a withdrawal
+  rpc withdrawal (CashRequest) returns (WithdrawActionReply) {}
+}
+
+    // get financial data
+service update_credit_income {
+  // Sends a credit and monthly income of service provider
+  rpc credit_and_income (CreditAndIncomeRequest) returns (CreditAndIncomeResponse) {}
+
+}
+    // getting an array of {i}th 10 transaction
+service transactions_ten_i {
+  // Sends the i tenth transactions
+  rpc transactions (TenITransactionRequest) returns (TenITransactionResponse) {}
+}
+
+    // getting an array of all bank account informations
+service show_accounts {
+  // Sends the i tenth transactions
+  rpc accounts (accountsRequest) returns (accountsResponse) {}
+}
+
+// The request message containing the username.
+message accountsRequest {
+  string user_ID = 1;
+}
+
+// The response message containing the owner's name , bank, account number and shaba number od each accounts
+message accountsResponse {
+    repeated AccountMsg account = 1;
+}
+
+message AccountMsg {
+    string owner = 1;
+    string bank = 2;
+    string accountNumber = 3;
+    string shaba = 4;
+    }
+
+// The request message containing the user's  and i.
+message TenITransactionRequest {
+  string user_ID = 1;
+  int32 i = 2;
+}
+
+// The response message containing type, value, date, paycode of i tenth transactions
+message TenITransactionResponse {
+    repeated Tenthitransactions tenthitransactions = 1;
+}
+
+message Tenthitransactions {
+        string type = 1;
+        int32 value = 2;
+        int64 date = 3;
+        string paycode = 4;
+    }
+
+// The request message containing the user's ID and requested cash.
+message CashRequest {
+  string user_ID = 1;
+  int32 cash = 2;
+  string bank_name = 3;
+  string account_number = 4;
+}
+
+// The response message containing the action (Successful = 1, not valid =0, cannot be paid =2)
+message WithdrawActionReply {
+  int32 status = 1;
+}
+
+// The request message containing the user's ID .
+message AccountInfoRequest {
+  string user_ID = 1;
+  string bank_name = 2;
+  string account_number = 3;
+  string shaba_number = 4;
+}
+
+// The response message containing the action (Successful = 1, not valid =0, cannot be paid =2)
+message AddingAccountActionReply {
+  int32 status = 1;
+}
+
+// The request message containing the user's ID
+message CreditAndIncomeRequest {
+  string user_ID = 1;
+}
+
+// The response message containing The income (monthly income) and the credit
+message CreditAndIncomeResponse {
+  int32 income = 2;
+  int32 credit = 3;
+}
