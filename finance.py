@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask import jsonify
 import sentry_sdk
-from finance_functions import *
+from utils.finance_functions import *
 
 sentry_sdk.init(
     "https://38ebd5aa73104a1d8b19b323c9fcdf67@sentry.daily-do.ir/4",
@@ -15,6 +15,8 @@ sentry_sdk.init(
 app = Flask(__name__)
 
 # get financial data(this month income and current credit)
+
+
 @app.route('/financial-tab-basic-info', methods=['GET'])
 def credit_and_income():
     current_user = "sp001"
@@ -31,6 +33,8 @@ def credit_and_income():
         return jsonify({'status': 0})
 
     # getting an array of {i}th 10 transaction
+
+
 @app.route('/financial-tab-transactions-table', methods=['GET'])
 def transactions():
     current_user = "sp001"
@@ -47,6 +51,8 @@ def transactions():
     return jsonify(result)
 
     # getting an array of all the bank accounts information
+
+
 @app.route('/financial-tab-bank-account-table', methods=['GET'])
 def accounts():
     current_user = "sp001"
@@ -61,7 +67,9 @@ def accounts():
         result.append(user_data)
     return jsonify(result)
 
-    #add a new bank account
+    # add a new bank account
+
+
 @app.route('/addaccount', methods=['POST'])
 def addaccount():
     current_user = "sp001"
@@ -80,6 +88,8 @@ def addaccount():
         return jsonify({'status': status})
 
 #   withdraw cash from credit
+
+
 @app.route("/withdrawal", methods=["POST"])
 def withdrawal():
     current_user = "sp001"
@@ -100,7 +110,7 @@ def withdrawal():
             # Cash deposit to your account was successful
             return jsonify({'status': 1})
         else:
-            #This amount cannot be paid
+            # This amount cannot be paid
             return jsonify({'status': 3})
     except:
         # error
